@@ -5,7 +5,7 @@ workshop_data/
 attention_data/
 *.png
 transfer-learning-weights-x4cyethl-epoch-10-step-308.pth
-*.sh
+# *.sh
 
 # ignore submitit logs
 .submitit/
