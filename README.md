@@ -18,38 +18,36 @@ Follow these steps to get paladin running on synthetic data in minutes.
 
 Requires **Python 3.11**. We recommend [uv](https://docs.astral.sh/uv/) for fast, reproducible installs.
 
-```bash
-# Install uv (if not already installed)
-# macOS / Linux
-curl -LsSf https://astral.sh/uv/install.sh | sh
-# Windows
-# powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+#### Install uv (if not already installed)
+For a macOS or Linux system, use the command
 
-# Clone and set up the project
-git clone git@github.com:kmboehm/paladin.git
-cd paladin
-# --seed includes pip & setuptools in the venv (required: pytorch-lightning
-# uses pkg_resources namespace packages to provide 'import lightning.pytorch')
-uv venv --seed --python 3.11
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+    curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Install PyTorch (the --index-url replaces PyPI, so only torch packages go here)
-# CPU-only (works everywhere):
-uv pip install torch==2.4.1+cpu torchvision==0.19.1+cpu --index-url https://download.pytorch.org/whl/cpu
-# GPU (CUDA 12.1):
-# uv pip install torch==2.4.1+cu121 torchvision==0.19.1+cu121 --index-url https://download.pytorch.org/whl/cu121
+For a Windows system, use
 
-# Install Lightning stack from PyPI
-# setuptools<81 is required: lightning 2.3 uses pkg_resources (removed in 81+)
-uv pip install lightning==2.3.0 torchmetrics==1.4.2 numpy==1.26.4 "setuptools<81"
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 
-# Install nn-template-core (provides nn_core module, installed without its
-# transitive deps to avoid a lightning version conflict)
-uv pip install --no-deps nn-template-core==0.4.0
+#### Clone the paladin repository from GitHub
 
-# Install paladin and all remaining dependencies
-uv pip install -e ".[dev]"
-```
+    git clone git@github.com:kmboehm/paladin.git
+    cd paladin
+
+
+#### Install the dependencies
+To install pytorch and all of the other dependencies listed in the pyproject.toml
+file, run the command
+
+    uv sync
+
+To install explicitly for GPU use (CUDA 12.1), you can run
+
+    uv sync --extra torch-gpu
+
+To install paladin without support for NVidia GPUs, you can install a CPU-only
+version of PyTorch with the command
+
+    uv sync --extra torch-cpu
+
 
 ### 2. Set up Weights & Biases
 
@@ -63,11 +61,9 @@ If no `wandb.key` file is found, paladin automatically falls back to **offline m
 
 ### 3. Generate synthetic data
 
-```bash
-python scripts/synthesize_workshop_data.py
-```
+    uv run scripts/synthesize_workshop_data.py
 
-This creates a `workshop_data/` directory containing:
+This creates a `workshop_data` directory containing:
 - **`synthetic_data.parquet`** — sample DataFrame with 120 samples (60% train / 20% val / 20% test)
 - **`tensors/`** — fake tile embedding `.pt` files (25 tiles x 1536 dims each)
 - **`h5/`** — fake coordinate `.h5` files
