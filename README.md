@@ -49,17 +49,6 @@ version of PyTorch with the command
     uv sync --extra torch-cpu
 
 
-#### Install nn-template-core
-After the other dependencies are installed, you need to install the nn-template-core
-module with the command
-
-    uv pip install --no-deps nn-template-core==0.4.0
-
-This installs nn-template-core without its own declared dependencies, because (a) those
-aren't needed for paladin, and (b) they claim a conflict with lightning.  Trying to
-install this together with the other dependencies will fail, because of the lightning
-version conflict.
-
 #### Add paladin to the environment
 Finally, add paladin to the environment with the command
 
