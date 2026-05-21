@@ -19,8 +19,9 @@ echo
 
 # Generate synthetic data
 if [[ ! -d $DATA_DIR || ! -f $DATA_FILE ]]; then
+    mkdir -p "${DATA_DIR}"
     echo "Create a random input data set..."
-    time uv run "${DATA_SCRIPT} --output-dir '${DATA_DIR}'"
+    time uv run "${DATA_SCRIPT}" --output-dir "${DATA_DIR}"
 else
     echo "Skip data creation - test data already exists."
 fi
