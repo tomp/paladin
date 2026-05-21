@@ -2,7 +2,6 @@ import logging
 import os
 from typing import Dict, List, Optional
 import sys
-NEWLINE = "\n"
 
 import hydra
 import lightning.pytorch as pl
@@ -67,8 +66,6 @@ def run(cfg: DictConfig) -> str:
         pylogger.warning("wandb.key not found — falling back to offline mode. Create a wandb.key file with your API key to enable online logging.")
         os.environ["WANDB_MODE"] = "offline"
 
-    # print(f'---- sys.path ----\n{NEWLINE.join(sys.path)}\n------------------')
-
     fast_dev_run: bool = cfg.train.trainer.fast_dev_run
     if fast_dev_run:
         pylogger.info(f"Debug mode <{cfg.train.trainer.fast_dev_run=}>. Forcing debugger friendly configuration!")
@@ -94,15 +91,11 @@ def run(cfg: DictConfig) -> str:
     if metadata is None:
         pylogger.warning(f"No 'metadata' attribute found in datamodule <{datamodule.__class__.__name__}>")
 
-    # print(f'---- sys.path ----\n{NEWLINE.join(sys.path)}\n------------------')
-
     # Instantiate model
     pylogger.info(f"Instantiating <{cfg.nn.module['_target_']}>")
     print(f"Instantiating <{cfg.nn.module['_target_']}>")
     model: pl.LightningModule = hydra.utils.instantiate(cfg.nn.module, _recursive_=False, metadata=metadata)
     print(model)
-
-    # print(f'---- sys.path ----\n{NEWLINE.join(sys.path)}\n------------------')
 
     # Instantiate the callbacks
     print("instantiating callbacks")
@@ -123,8 +116,6 @@ def run(cfg: DictConfig) -> str:
     # Add to model for tracking
     model.run_hash = run_hash
     model.storage_path = logger.run_dir
-
-    # print(f'---- sys.path ----\n{NEWLINE.join(sys.path)}\n------------------')
 
     pylogger.info("Instantiating the <Trainer>")
     trainer = pl.Trainer(
