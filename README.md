@@ -60,11 +60,6 @@ aren't needed for paladin, and (b) they claim a conflict with lightning.  Trying
 install this together with the other dependencies will fail, because of the lightning
 version conflict.
 
-#### Add paladin to the environment
-Finally, add paladin to the environment with the command
-
-    uv pip install -e .
-
 
 ### 2. Set up Weights & Biases
 
