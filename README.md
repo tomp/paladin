@@ -49,12 +49,6 @@ version of PyTorch with the command
     uv sync --extra torch-cpu
 
 
-#### Add paladin to the environment
-Finally, add paladin to the environment with the command
-
-    uv pip install -e .
-
-
 ### 2. Set up Weights & Biases
 
 Training logs to [Weights & Biases](https://wandb.ai). Create a free account at [wandb.ai](https://wandb.ai), then:
