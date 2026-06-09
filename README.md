@@ -249,5 +249,8 @@ Paladin uses [Hydra](https://hydra.cc/) for hierarchical configuration. All conf
 pre-commit run --all-files
 
 # Update dependencies
-uv pip install -e ".[dev]"
+uv sync
+
+# Run tests
+uv run pytest
 ```
